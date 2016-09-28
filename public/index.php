@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_ERROR);
+error_reporting(E_ERROR);
 /* File: index.php
  *
  * Copyright © 20'6 Terry Gilliver <terry@comp-solutions.org.uk> - Computer Solutions
