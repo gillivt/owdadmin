@@ -18,8 +18,24 @@ $('li#courses').addClass('active');
 $('div#mywrapper').fadeIn(1000);
 $('a').click(function(e){
     e.preventDefault();
-    var href= $(this).attr('href');
-    $('div#mywrapper').fadeOut(1000, function() {
-        window.location=href;
-    });
+    var id = $(this).attr('id');
+    switch (id) {
+        case 'viewunclaimedcourse':
+            $('#result').load('viewunclaimedcourse.php');
+            break;
+        case 'editunclaimedcourse':
+            $('#result').load('editunclaimedcourse.php');
+            break;
+        case 'viewclaimedcourse':
+            $('#result').load('viewclaimedcourse.php');
+            break;
+        case 'editclaimedcourse':
+            $('#result').load('editclaimedcourse.php');
+            break;
+        default:
+            var href= $(this).attr('href');
+            $('div#mywrapper').fadeOut(1000, function() {
+                window.location=href;
+            });
+    }  
 });

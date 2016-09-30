@@ -1,9 +1,5 @@
 <?php
-require_once("../database/initialize.php");
-include_layout_template("header.php");
-?>
-<!DOCTYPE html>
-<!--
+/**
 * File: 404page.php
 * 
 * Date: 16-Feb-2016
@@ -17,7 +13,10 @@ include_layout_template("header.php");
 * 
 * Modification History
 * 
--->
+*/
+require_once("../database/initialize.php");
+include_layout_template("header.php");
+?>
 <main>
     <div class="container-fluid">
         <div class="row">
@@ -31,7 +30,7 @@ include_layout_template("header.php");
     </div>
 </main>
 
-<script src="assets/js/index.js"></script>
+<script src="assets/js/404.js"></script>
 <?php
 include_layout_template("footer.php");
 ?>

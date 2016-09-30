@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 /* File: index.php
  *
  * Copyright © 20'6 Terry Gilliver <terry@comp-solutions.org.uk> - Computer Solutions
@@ -26,24 +26,28 @@ $max_file_size = 10485760;   // expressed in bytes (10MB)
 
 if (isset($_POST["submitinstructors"])) {
     $result = uploadCSV("instructor.csv");
-    if ($result) {
+    if ($result ==='ok') {
 //any other processing for success
-        log_action('Upload', 'instructor file uploaded by ' . $name);
+        log_action("Upload", "Intructor file uploaded by {$name}");
+        $session->message('Instructor File Uploaded Succesfully', 'alert-success','glyphicon-ok-circle');
         redirect_to($_SERVER["PHP_SELF"]);
     } else {
 //any other processing for fail
-        log_action('Upload', 'instructor file upload failed. Attempt by ' . $name);
+        log_action("Upload", "Instructor Upload Failed, {$result}. Attempt by {$name}");
+        $session->message("Instructor Upload Failed. {$result}", "alert-danger", "glyphicon-warning-sign");
         redirect_to($_SERVER["PHP_SELF"]);
     }
 } elseif (isset($_POST["submitcourses"])) {
     $result = uploadCSV("course.csv");
-    if ($result) {
+    if ($result==='ok') {
 //any other processing for success
-        log_action('Upload', 'Course file uploaded by ' . $name);
+        log_action("Upload", "Course file uploaded by {$name}");
+        $session->message('Course File Uploaded Succesfully', 'alert-success','glyphicon-ok-circle');
         redirect_to($_SERVER["PHP_SELF"]);
     } else {
 //any other processing for fail
-        log_action('Upload', 'Course file upload failed. Attempt by ' . $name);
+        log_action("Upload", "Course Upload Failed, {$result}. Attempt by {$name}");
+        $session->message("Course Upload Failed. {$result}", "alert-danger", "glyphicon-warning-sign");
         redirect_to($_SERVER["PHP_SELF"]);
     }
 }
@@ -58,10 +62,6 @@ include_layout_template('header.php');
             </div>
         </div>        
         <div class='row'>
-            <!-- <div class='col-xs-'2 col-sm-">
-                <br><br>
-                <a href='https://www.facebook.com//'><img data-toggle='tooltip' title='Find us on Facebook' class='img-responsive' src='assets/images/facebook.png' alt='facebook'></a>
-            </div> -->
             <div class='col-xs-12 col-sm-6 text'>
                 <h3>Upload Instructors</h3>
                 <form id='uploadinstructors' data-toggle='validator' role='form' action='<?php echo $_SERVER["PHP_SELF"]; ?>' enctype='multipart/form-data' method='POST'>

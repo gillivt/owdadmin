@@ -18,8 +18,15 @@ $('li#diaries').addClass('active');
 $('div#mywrapper').fadeIn(1000);
 $('a').click(function(e){
     e.preventDefault();
-    var href= $(this).attr('href');
-    $('div#mywrapper').fadeOut(1000, function() {
-        window.location=href;
-    });
+    var id = $(this).attr('id');
+    switch (id) {
+        case 'viewinstructordiary':
+            $('#result').load('viewinstructordiary.php');
+            break;
+        default:
+            var href= $(this).attr('href');
+            $('div#mywrapper').fadeOut(1000, function() {
+                window.location=href;
+            });
+    }  
 });

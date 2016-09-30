@@ -106,27 +106,32 @@ function uploadCSV($filename) {
         case UPLOAD_ERR_OK:
             //check file size here as well
             if ($_FILES["file_upload"]["size"] > $max_file_size) {
-                $session->message('Exceeded filesize limit', 'alert-danger', 'glyphicon-rwarning-sign');
-                return false;
+                return 'Exceeded Filesize Limit';
+                //$session->message('Exceeded filesize limit', 'alert-danger', 'glyphicon-rwarning-sign');
+                //return false;
             }
             //check mimetype
             //$mtype = $_FILES["file_upload"]["type"];
             $mtype = get_mime_type($_FILES["file_upload"]["tmp_name"]);
             if (!($mtype === "text/plain" || $mtype === "text/csv")) {
-                $session->message('Wrong mimetype ' . $mtype, 'alert-danger', 'glyphicon-warning-sign');
-                return false;
+                return 'Wrong Mimetype';
+                //$session->message('Wrong mimetype ' . $mtype, 'alert-danger', 'glyphicon-warning-sign');
+                //return false;
             }
             break;
         case UPLOAD_ERR_NO_FILE:
-            $session->message('No file sent', 'alert-danger', 'glyphicon-warning-sign');
-            return false;
+            return "No File Sent";
+            //$session->message('No file sent', 'alert-danger', 'glyphicon-warning-sign');
+            //return false;
         case UPLOAD_ERR_INI_SIZE:
         case UPLOAD_ERR_FORM_SIZE:
-            $session->message('Exceeded filesize limit', 'alert-danger', 'glyphicon-warning-sign');
-            return false;
+            return 'Exceeded Filesize Limit';
+            //$session->message('Exceeded filesize limit', 'alert-danger', 'glyphicon-warning-sign');
+            //return false;
         default:
-            $session->message('Unknown error', 'alert-danger', 'glyphicon-warning-sign');
-            return false;
+            return 'Unknown Error';
+            //$session->message('Unknown error', 'alert-danger', 'glyphicon-warning-sign');
+            //return false;
     }
 
     $target_dir = '../csvuploads/';
@@ -148,19 +153,22 @@ function uploadCSV($filename) {
         while (($row = fgetcsv($fh, 0, ',')) !== false) {
             $csvdata[] = $row;
         }
-        if ($file_noext === "instructor") {
-            processInstructor($csvdata);
-        } elseif ($file_noext === "course") {
-            processCourse($csvdata);
+        $indexcount = count($csvdata[1]);
+        if ($file_noext === "instructor" && $indexcount === 21) {
+            $response = processInstructor($csvdata);
+        } elseif ($file_noext === "course" & $indexcount === 15) {
+            $response = processCourse($csvdata);
         } else {
-            $session->message("Incorrect Function Call", "alert-danger", "glyphicon-warning-sign");
-            return false;
+            return 'Data Wrong Format';
+            //$session->message("Incorrect Function Call or Data Wrong Format", "alert-danger", "glyphicon-warning-sign");
+            //return false;
         }
     } else {
-        $session->message("File cannot be moved", "alert-danger", "glyphicon-warning-sign");
-        return false;
+        return 'File Cannot Be Moved';
+        //$session->message("File cannot be moved", "alert-danger", "glyphicon-warning-sign");
+        //return false;
     }
-    return true;
+    return 'ok';
 }
 
 function processInstructor($csvdata) {
@@ -206,14 +214,10 @@ function processInstructor($csvdata) {
                 ->addHeader("Authorization", $session->token)
                 ->body($json)
                 ->send();
-        /*         * ********************************* */
-//        $response=$json;
-//        $session->message($response);
-        $session->message('The file ' . basename($_FILES["file_upload"]["name"]) . ' was uploaded', 'alert-success', 'glyphicon-ok-circle');
-        return true;
+
+        return 'ok';
     } catch (exception $e) {
-        $session->message("Error {$e->getMessage()}, the file is not the right format", 'alert-danger', 'glyphicon-warning-sign');
-        return false;
+        return "Error {$e->getMessage()}";
     }
 }
 
@@ -254,13 +258,9 @@ function processCourse($csvdata) {
                 ->addHeader("Authorization", $session->token)
                 ->body($json)
                 ->send();
-//        $session->message( $json );
-        $session->message('The file ' . basename($_FILES["file_upload"]["name"]) . ' was uploaded', 'alert-success', 'glyphicon-ok-circle');
-//        $session->message("$response");
-        return true;
+        return 'ok';
     } catch (exception $e) {
-        $session->message("Error {$e->getMessage()}, the file is not the right format", 'alert-danger', 'glyphicon-warning-sign');
-        return false;
+        return "Error {$e->getMessage()}";
     }
 }
 

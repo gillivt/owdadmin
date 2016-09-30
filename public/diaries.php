@@ -31,7 +31,8 @@ if (!$session->is_logged_in()) {redirect_to("login.php");}include_layout_templat
                     <a class="list-group-item list-group-item-warning" id="viewinstructordiary" href="#"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View Diaries</a>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-8 text">
+            <div id="result" class="col-xs-12 col-sm-8 text">
+                <!--page is loaded here using ajax-->
             </div>
         </div>
     </div>
