@@ -32,6 +32,9 @@ $('a').click(function(e){
         case 'editinstructor':
             $('#result').load('editinstructor.php');
             break;
+        case 'sendpush':
+            $('#result').load('sendpush.php');
+            break;
         default:
             var href= $(this).attr('href');
             $('div#mywrapper').fadeOut(1000, function() {
